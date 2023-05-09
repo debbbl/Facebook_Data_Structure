@@ -8,6 +8,7 @@ public class User {
     private final String phone;
     private final String username;
     private final String password;
+    private String relationshipStatus;
     private final List<String> hobbies;
 
     private User(Builder builder) {
@@ -32,6 +33,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+    
+    public void setRelationshipStatus(String relationshipStatus) {
+    this.relationshipStatus = relationshipStatus;
     }
 
     public List<String> getHobbies() {
