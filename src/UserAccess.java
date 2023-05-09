@@ -27,10 +27,17 @@ public class UserAccess extends User {
 
     }
 
-    public void delete(User userToBeDeleted) {
+    public void delete(User userToBeDeleted) {//delete userlist
         userList.remove(userToBeDeleted);
     }
-
+//delete inAppropriateContents
+public void removeInappropriateMaterials() {
+   for(User user :userList){
+  if(!user.getUsername().matches("")){//if the username contains some incorrect words * the ("")we need to set the criteria
+   userList.remove(user);
+  }
+   }
+}
 
     class parentControl {
         public boolean CanChildContinueUse() {
