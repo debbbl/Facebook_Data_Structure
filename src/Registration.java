@@ -6,7 +6,7 @@ public class Registration {
     public Registration(UserDatabase userDatabase) {
         this.userDatabase = userDatabase;
     }
-    public void showRegistrationForm() {
+    public void showRegistrationForm() {//get form data and we also need scanner in main method in order to transfer data data into Registration 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter your name:");
         String name = scanner.nextLine();
@@ -25,17 +25,22 @@ public class Registration {
         System.out.println("Please enter your job");
         String job=scanner.nextLine();
         System.out.print("Enter hobbies (comma-separated): ");
-        String hobbiesString = scanner.nextLine();
+        String hobbiesString = scanner.nextLine();// String hobbiesString = scanner.nextLine();List<String> hobbies = Arrays.asList(hobbiesString.split(","));                                                
         List<String> hobbies = new ArrayList<>();
         for (String hobby : hobbiesString.split(",")) {
             hobbies.add(hobby.trim());
         }
         User.Builder builder = new User.Builder();
+
+
         builder.email(email)
                 .phone(phone)
-                .username("username")
+                .username(name)
+                .gender(gender)
+                .job(job)
                 .password(password)
                 .hobbies(hobbies);
+
         User user = builder.build();
     }
 
@@ -55,4 +60,4 @@ public class Registration {
 
 
 }
-}
+
