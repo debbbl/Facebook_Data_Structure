@@ -1,8 +1,16 @@
 import java.util.List;
 
 public class User {
-    private String email, phone, username, password, gender, job, birthday, address, relationshipStatus;
-    private final List<String> hobbies;
+    private String email;
+    private String phone;
+    private String username;
+    private String password;
+    private String gender;
+    private String job;
+    private String birthday;
+    private String address;
+    private String relationshipStatus;
+    private List<String> hobbies;
 
     protected User(Builder builder) {
         this.email = builder.email;
@@ -51,12 +59,57 @@ public class User {
     }
 
     public void setRelationshipStatus(String relationshipStatus) {
-        this.relationshipStatus = relationshipStatus;
+        // Check if the new status is valid
+        if (relationshipStatus.equals("Single") || relationshipStatus.equals("In a relationship") || 
+            relationshipStatus.equals("Engaged") || relationshipStatus.equals("Married") || 
+            relationshipStatus.equals("It's complicated")) {
+            this.relationshipStatus = relationshipStatus;
+        } else {
+            System.out.println("Invalid relationship status");
+        }
     }
 
     public List<String> getHobbies() {
         return hobbies;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setHobbies(List<String> hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+    
+    
 
     public static class Builder {
         private String email;
@@ -119,4 +172,3 @@ public class User {
         }
     }
 }
-
