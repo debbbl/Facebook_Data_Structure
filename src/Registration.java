@@ -1,63 +1,62 @@
 import java.util.*;
 
 public class Registration {
-    private UserDatabase userDatabase;
+    private UserDataBase userDatabase;
 
-    public Registration(UserDatabase userDatabase) {
+    public Registration(UserDataBase userDatabase) {
         this.userDatabase = userDatabase;
     }
-    public void showRegistrationForm() {//get form data and we also need scanner in main method in order to transfer data data into Registration 
+
+    public void showRegistrationForm() {
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("Please enter your name:");
         String name = scanner.nextLine();
-        System.out.println("Please enter your gender");
-        String gender=scanner.nextLine();
-        System.out.println("Please enter your email");
-        String email=scanner.nextLine();
-        System.out.println("Please enter your phone ");
-        String phone=scanner.nextLine();
-        System.out.println("Please enter your password");
-        String password=scanner.nextLine();
-        System.out.println("Please enter your birthday ");
-        String birthday=scanner.nextLine();
-        System.out.println("Please enter your address");
-        String address=scanner.nextLine();
-        System.out.println("Please enter your job");
-        String job=scanner.nextLine();
+        System.out.println("Please enter your gender:");
+        String gender = scanner.nextLine();
+        System.out.println("Please enter your email:");
+        String email = scanner.nextLine();
+        System.out.println("Please enter your phone:");
+        String phone = scanner.nextLine();
+        String password = enterPassword(scanner);
+        System.out.println("Please enter your birthday (DD-MM-YYYY):");
+        String birthday = scanner.nextLine();
+        System.out.println("Please enter your address:");
+        String address = scanner.nextLine();
+        System.out.println("Please enter your job:");
+        String job = scanner.nextLine();
         System.out.print("Enter hobbies (comma-separated): ");
-        String hobbiesString = scanner.nextLine();// String hobbiesString = scanner.nextLine();List<String> hobbies = Arrays.asList(hobbiesString.split(","));                                                
-        List<String> hobbies = new ArrayList<>();
-        for (String hobby : hobbiesString.split(",")) {
-            hobbies.add(hobby.trim());
-        }
-        User.Builder builder = new User.Builder();
+        String hobbiesString = scanner.nextLine();
+        List<String> hobbies = Arrays.asList(hobbiesString.split(","));
 
-
-        builder.email(email)
+        User.Builder builder = new User.Builder()
+                .email(email)
                 .phone(phone)
                 .username(name)
                 .gender(gender)
                 .job(job)
                 .password(password)
-                .hobbies(hobbies);
+                .hobbies(hobbies)
+                .birthday(birthday)
+                .address(address);;
 
         User user = builder.build();
+        userDatabase.addUser(user);
+        System.out.println("Registration successful!");
     }
 
-    public void submitRegistration(String username, String email, String phone, String password,
-                                   String name, String birthday, String gender, String address,
-                                   String job, List<String> hobbies) {
-        // Check if useraccount already exists
-        if (userDatabase.containsUser(username)) {//method in database
-            System.out.println("User exists");
+    private String enterPassword(Scanner scanner) {
+        while (true) {
+            System.out.println("Please enter your password:");
+            String password = scanner.nextLine();
+            System.out.println("Please retype your password:");
+            String retypePassword = scanner.nextLine();
 
-        }else {
-            userDatabase.add(user);//method in database
-            System.out.println("Registration successful!");
+            if (password.equals(retypePassword)) {
+                return password;
+            } else {
+                System.out.println("Passwords do not match. Please try again.");
+            }
         }
-        return;
     }
-
-
 }
-

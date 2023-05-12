@@ -1,4 +1,4 @@
-import java.sql.*;
+/*import java.sql.*;
 
 public class MockData {
     private int id;
@@ -6,7 +6,7 @@ public class MockData {
     private String email;
     private boolean isAdmin;
 
-    public User(int id, String name, String email, boolean isAdmin) {
+    public MockData(int id, String name, String email, boolean isAdmin) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -67,11 +67,11 @@ public class MockData {
                 String name = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 boolean isAdmin = resultSet.getBoolean("isAdmin");
-                User user = new User(id, name, email, isAdmin);
-                System.out.println(user.getName() + " (" + user.getEmail() + ")" + (user.isAdmin() ? " - Admin" : ""));
+                User user = new MockData(id, name, email, isAdmin);
+                System.out.println(user.getUsername() + " (" + user.getEmail() + ")" + (user.isAdmin() ? " - Admin" : ""));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-}
+}*/

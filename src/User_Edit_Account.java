@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 
-public class User {  //this is just same like the user account but there is some adjustment for edit account function (NO.3)
+public class User_Edit_Account {  //this is just same like the user account but there is some adjustment for edit account function (NO.3)
     private String name;
     private String password;
     private String email;
@@ -11,7 +11,7 @@ public class User {  //this is just same like the user account but there is some
     public ArrayList<String> hobbies;
     private Stack<String> jobExperiences;
 
-    public User(String name, String password,String email, String phone,String relationshipStatus) {
+    public User_Edit_Account(String name, String password,String email, String phone,String relationshipStatus) {
         this.name = name;
         this.password = password;
         this.email = email;

@@ -1,8 +1,5 @@
-import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
-//register
 public class User {
     private final String email;
     private final String phone;
@@ -10,17 +7,31 @@ public class User {
     private final String password;
     private final String gender;
     private final String job;
+    private final String birthday;
+    private final String address;
     private String relationshipStatus;
     private final List<String> hobbies;
 
-    private User(Builder builder) {
+    protected User(Builder builder) {
         this.email = builder.email;
         this.phone = builder.phone;
-        this.gender=builder.gender;
         this.username = builder.username;
         this.password = builder.password;
+        this.gender = builder.gender;
+        this.job = builder.job;
         this.hobbies = builder.hobbies;
-        this.job=builder.job;
+        this.birthday = builder.birthday;
+        this.address = builder.address;
+    }
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+    public String getRelationshipStatus() {
+        return relationshipStatus;
     }
 
     public String getEmail() {
@@ -38,13 +49,15 @@ public class User {
     public String getPassword() {
         return password;
     }
-    public String getGender(){
-        return  gender;
+
+    public String getGender() {
+        return gender;
     }
 
-    public String getJob(){
+    public String getJob() {
         return job;
     }
+
     public void setRelationshipStatus(String relationshipStatus) {
         this.relationshipStatus = relationshipStatus;
     }
@@ -54,12 +67,14 @@ public class User {
     }
 
     public static class Builder {
-        public String gender;
         private String email;
         private String phone;
         private String username;
         private String password;
+        private String gender;
         private String job;
+        private String birthday;
+        private String address;
         private List<String> hobbies;
 
         public Builder email(String email) {
@@ -67,26 +82,28 @@ public class User {
             return this;
         }
 
-        public Builder username(String username) {
-            this.username = username;
-            return this;
-        }
         public Builder phone(String phone) {
             this.phone = phone;
             return this;
         }
 
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
 
         public Builder gender(String gender) {
             this.gender = gender;
             return this;
         }
-        public Builder job(String hob) {
+
+        public Builder job(String job) {
             this.job = job;
-            return this;
-        }
-        public Builder password(String password) {
-            this.password = password;
             return this;
         }
 
@@ -95,8 +112,19 @@ public class User {
             return this;
         }
 
+        public Builder birthday(String birthday) {
+            this.birthday = birthday;
+            return this;
+        }
+
+        public Builder address(String address) {
+            this.address = address;
+            return this;
+        }
+
         public User build() {
             return new User(this);
         }
     }
 }
+
