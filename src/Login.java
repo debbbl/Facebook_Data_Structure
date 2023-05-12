@@ -20,7 +20,7 @@ public class Login {
         authenticate();
     }
 
-    public void authenticate() {
+    public String authenticate() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter your email or phone number: ");
@@ -32,8 +32,10 @@ public class Login {
         User user = userDatabase.findUserByEmailOrPhone(emailOrPhone);
         if (user != null && user.getPassword().equals(password)) {
             System.out.println("Welcome, " + user.getUsername() + "!");
+            return user.getUsername();
         } else {
             System.out.println("Invalid email/phone or password. Please try again.");
+            return null;
         }
     }
 }
