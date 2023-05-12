@@ -1,14 +1,7 @@
 import java.util.List;
 
 public class User {
-    private final String email;
-    private final String phone;
-    private final String username;
-    private final String password;
-    private final String gender;
-    private final String job;
-    private final String birthday;
-    private final String address;
+    private final String email, phone, username, password, gender, job, birthday, address;
     private String relationshipStatus;
     private final List<String> hobbies;
 
