@@ -9,17 +9,6 @@ import java.util.Scanner;
 public class EditUser  {
     private UserDataBase userDatabase;
     private String userName;
-    private String email;
-    private String phone;
-    private String editUsername;
-    private String password;
-    private String gender;
-    private String job;
-    private String birthday;
-    private String address;
-    private String relationshipStatus;
-    private List<String> hobbies;
-
     
     public EditUser(UserDataBase userDatabase,String userName) {
         this.userDatabase = userDatabase;
