@@ -57,8 +57,9 @@ public class Main {
                         viewProfile.searchUser();
                         break;
                     case 2:
+                        EditUser editUser = new EditUser(userDatabase,loggedInUsername);
                         System.out.println("Edit Own Account:");
-                        // Add code to handle editing own account
+                        editUser.edit();
                         break;
                     case 3:
                         loggedIn = false;
