@@ -24,6 +24,7 @@ public class ViewProfile {
     private void displayProfile(User user) {
         System.out.println("Username: " + user.getUsername());
         System.out.println("Email: " + user.getEmail());
+        System.out.println("Age: " + user.getAge());
         System.out.println("Gender: " + user.getGender());
         System.out.println("Phone: " + user.getPhone());
         System.out.println("Birthday: " + user.getBirthday());

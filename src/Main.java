@@ -44,9 +44,11 @@ public class Main {
                 }
             } else {
                 System.out.println("1. View Profile");
-                System.out.println("2. Edit Own Account");
-                System.out.println("3. Logout");
-                System.out.println("4. Go Back");
+                System.out.println("2. Edit Account");
+                System.out.println("3. Search for Friends");
+                System.out.println("4. Suggest mutual friends");
+                System.out.println("5. Logout");
+                System.out.println(". Go Back");
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Consume the newline character

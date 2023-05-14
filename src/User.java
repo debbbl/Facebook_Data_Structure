@@ -11,6 +11,7 @@ public class User {
     private String address;
     private String relationshipStatus;
     private List<String> hobbies;
+    private int age, numOfFriends;
 
     protected User(Builder builder) {
         this.email = builder.email;
@@ -25,6 +26,10 @@ public class User {
     }
     public String getBirthday() {
         return birthday;
+    }
+
+    public int getAge() {
+        return 2023-Integer.parseInt(this.birthday.substring(6,10));
     }
 
     public String getAddress() {
