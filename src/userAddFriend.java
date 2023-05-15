@@ -29,6 +29,7 @@ public class userAddFriend {
             friendsGraph.get(username).add(friendUsername);
             friendsGraph.get(friendUsername).add(username);
             System.out.println(friendUsername + " is now your friend!");
+            System.out.println("Total Friend you have right now is : "+friendList.size());
         }
     }
     public void rejectFriendRequest(String friendUsername) { // Method for rejecting a friend request
@@ -53,6 +54,15 @@ public class userAddFriend {
         if (!friendList.contains(friendUsername) && !friendRequestsQueue.contains(friendUsername)) { // Check if the friend is not already in the friend list or friend request queue
             friendRequestsQueue.add(friendUsername);
             System.out.println("Friend request sent to " + friendUsername);
+        }
+    }
+    public void showNumberOfFriends(){
+        System.out.println("Total Friend you have right now is : "+friendList.size());
+    }
+    public void showFriendList(){
+        System.out.println("Your Friends");
+        for(int i=0;i<friendList.size();i++){
+            System.out.println(i+") "+friendList.get(i));
         }
     }
 }
