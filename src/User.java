@@ -113,7 +113,6 @@ public class User {
         this.job = job;
     }
     public void searchUser(String Username){
-        Scanner scan = new Scanner(System.in);
         String[] split = Username.split(" ");
         for(String name : split){
             if(userDataBase.containsUser(name)){
