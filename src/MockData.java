@@ -1,4 +1,5 @@
-/*import java.sql.*;
+import java.io.*;
+import java.util.*;
 
 public class MockData {
     private int id;
@@ -13,65 +14,79 @@ public class MockData {
         this.isAdmin = isAdmin;
     }
 
-    public int getId() {
-        return id;
+    // Getters and setters
+
+    public static void main(String[] args) {
+        String filePath = "users.data";
+        FileDataStore dataStore = new FileDataStore(filePath);
+
+        List<MockData> users;
+        try {
+            users = dataStore.loadUsers();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        if (users == null || users.isEmpty()) {
+            // Generate initial data
+            for (int i = 1; i <= 30; i++) {
+                MockData user = new MockData(i, "User " + i, "user" + i + "@example.com", false);
+                users.add(user);
+            }
+
+            for (int i = 31; i <= 32; i++) {
+                MockData admin = new MockData(i, "Admin " + (i - 30), "admin" + (i - 30) + "@example.com", true);
+                users.add(admin);
+            }
+
+            try {
+                dataStore.saveUsers(users);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+
+        // Use the users data for business operations
+        for (MockData user : users) {
+            System.out.println(user.name + " - " + (user.isAdmin() ? "Admin" : "Normal User"));
+        }
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 
     public boolean isAdmin() {
         return isAdmin;
     }
 
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/mydatabase";
-        String username = "root";
-        String password = "password";
+}
 
-        try (Connection connection = DriverManager.getConnection(url, username, password)) {
-            Statement statement = connection.createStatement();
+class FileDataStore {
+    private String filePath;
 
-            // Create table if it doesn't exist
-            String createTable = "CREATE TABLE IF NOT EXISTS users (id INT PRIMARY KEY, name VARCHAR(255), email VARCHAR(255), isAdmin BOOLEAN)";
-            statement.executeUpdate(createTable);
+    public FileDataStore(String filePath) {
+        this.filePath = filePath;
+    }
 
-            // Insert mock data
-            String insertData = "INSERT INTO users (id, name, email, isAdmin) VALUES (?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertData);
-            for (int i = 1; i <= 30; i++) {
-                preparedStatement.setInt(1, i);
-                preparedStatement.setString(2, "User " + i);
-                preparedStatement.setString(3, "user" + i + "@example.com");
-                preparedStatement.setBoolean(4, false);
-                preparedStatement.executeUpdate();
-            }
-            for (int i = 31; i <= 32; i++) {
-                preparedStatement.setInt(1, i);
-                preparedStatement.setString(2, "Admin " + i);
-                preparedStatement.setString(3, "admin" + i + "@example.com");
-                preparedStatement.setBoolean(4, true);
-                preparedStatement.executeUpdate();
-            }
-
-            // Retrieve data
-            String retrieveData = "SELECT * FROM users";
-            ResultSet resultSet = statement.executeQuery(retrieveData);
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                boolean isAdmin = resultSet.getBoolean("isAdmin");
-                User user = new MockData(id, name, email, isAdmin);
-                System.out.println(user.getUsername() + " (" + user.getEmail() + ")" + (user.isAdmin() ? " - Admin" : ""));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public void saveUsers(List<MockData> users) throws IOException {
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(filePath))) {
+            outputStream.writeObject(users);
         }
     }
-}*/
+
+    public List<MockData> loadUsers() throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return new ArrayList<>();
+        }
+
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(file))) {
+            try {
+                return (List<MockData>) inputStream.readObject();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
+            }
+        }
+    }
+}
