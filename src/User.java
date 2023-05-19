@@ -11,8 +11,9 @@ public class User {
     private String address;
     private String relationshipStatus;
     private List<String> hobbies;
-    private java.util.ArrayList<User> searchList = new ArrayList<>();
     private UserDataBase userDataBase;
+    private List<User> friends;
+    private Queue<User> friendRequests;
 
     protected User(Builder builder) {
         this.email = builder.email;
@@ -24,6 +25,8 @@ public class User {
         this.hobbies = builder.hobbies;
         this.birthday = builder.birthday;
         this.address = builder.address;
+        this.friends = new ArrayList<>();
+        this.friendRequests = new LinkedList<>();
     }
     public String getBirthday() {
         return birthday;
@@ -112,14 +115,46 @@ public class User {
     public void setJob(String job) {
         this.job = job;
     }
-    public void searchUser(String Username){
-        String[] split = Username.split(" ");
-        for(String name : split){
-            if(userDataBase.containsUser(name)){
-                System.out.println(userDataBase.getUser(name));
-                searchList.add(userDataBase.getUser(name));
-            }
+
+    public void sendFriendRequest(User user) {
+        if (!friendRequests.contains(user) && !friends.contains(user)) {
+            friendRequests.add(user);
+            System.out.println(username + " sent a friend request to " + user.getUsername());
+        } else {
+            System.out.println("Friend request already sent to or already friends with " + user.getUsername());
         }
+    }
+    public void receiveFriendRequest(User user) {
+        if (!friendRequests.contains(user) && !friends.contains(user)) {
+            friendRequests.add(user);
+            System.out.println(username + " received a friend request from " + user.getUsername());
+        } else {
+            System.out.println("Friend request already received from or already friends with " + user.getUsername());
+        }
+    }
+    public void acceptFriendRequest(User user) {
+        if (friendRequests.contains(user)) {
+            friendRequests.remove(user);
+            friends.add(user);
+            user.getFriends().add(this);
+            System.out.println(username + " accepted the friend request from " + user.getUsername());
+        } else {
+            System.out.println("No friend request received from " + user.getUsername());
+        }
+    }
+    public void rejectFriendRequest(User user) {
+        if (friendRequests.contains(user)) {
+            friendRequests.remove(user);
+            System.out.println(username + " rejected the friend request from " + user.getUsername());
+        } else {
+            System.out.println("No friend request received from " + user.getUsername());
+        }
+    }
+    public List<User> getFriends() {
+        return friends;
+    }
+    public Queue<User> getFriendRequests() {
+        return friendRequests;
     }
     public static class Builder {
         private String email;
@@ -179,70 +214,6 @@ public class User {
 
         public User build() {
             return new User(this);
-        }
-    }
-    public static class userAddFriend {
-        private String username;
-        private ArrayList<String> friendList;
-        private HashMap<String, ArrayList<String>> friendsGraph; // Map username to friends list
-        private HashMap<String, Integer> recommendedFriends; // Map username to recommendation score
-        private Queue<String> friendRequestsQueue; // Queue of friend requests
-
-        public userAddFriend(String username) {
-            this.username = username;
-            this.friendList = new ArrayList<>();
-            this.friendsGraph = new HashMap<>();
-            this.recommendedFriends = new HashMap<>();
-            this.friendRequestsQueue = new LinkedList<>();
-        }
-        public void addRecommendedFriend(String friendUsername, int recommendationScore) { // Method for adding a new recommended friend to the graph
-            if (!friendList.contains(friendUsername) && !recommendedFriends.containsKey(friendUsername)) { // Check if the recommended friend is not already in the friend list or recommended list
-                recommendedFriends.put(friendUsername, recommendationScore);
-                friendsGraph.put(friendUsername, new ArrayList<>());
-            }
-        }
-        public void acceptFriendRequest(String friendUsername) { // Method for accepting a friend request and adding the friend to the friend list
-            if (friendRequestsQueue.contains(friendUsername)) { // Check if the friend request exists in the friend request queue
-                friendRequestsQueue.remove(friendUsername);
-                friendList.add(friendUsername);
-                friendsGraph.get(username).add(friendUsername);
-                friendsGraph.get(friendUsername).add(username);
-                System.out.println(friendUsername + " is now your friend!");
-                System.out.println("Total Friend you have right now is : "+friendList.size());
-            }
-        }
-        public void rejectFriendRequest(String friendUsername) { // Method for rejecting a friend request
-            if (friendRequestsQueue.contains(friendUsername)) { // Check if the friend request exists in the friend request queue
-                friendRequestsQueue.remove(friendUsername);
-                System.out.println("You have rejected the friend request from " + friendUsername);
-            }
-        }
-        public ArrayList<String> getRecommendedFriends() { // Method for getting the list of recommended friends sorted by recommendation score
-            ArrayList<String> sortedFriends = new ArrayList<>();
-            recommendedFriends.entrySet()
-                    .stream()
-                    .sorted((o1, o2) -> o2.getValue().compareTo(o1.getValue())) // Sort by recommendation score in descending order
-                    .forEach(entry -> sortedFriends.add(entry.getKey()));
-            return sortedFriends;
-        }
-        public ArrayList<String> getFriendRequests() { // Method for getting the list of friend requests
-            ArrayList<String> requests = new ArrayList<>(friendRequestsQueue);
-            return requests;
-        }
-        public void sendFriendRequest(String friendUsername) { // Method for sending a friend request to another user
-            if (!friendList.contains(friendUsername) && !friendRequestsQueue.contains(friendUsername)) { // Check if the friend is not already in the friend list or friend request queue
-                friendRequestsQueue.add(friendUsername);
-                System.out.println("Friend request sent to " + friendUsername);
-            }
-        }
-        public void showNumberOfFriends(){
-            System.out.println("Total Friend you have right now is : "+friendList.size());
-        }
-        public void showFriendList(){
-            System.out.println("Your Friends");
-            for(int i=0;i<friendList.size();i++){
-                System.out.println(i+") "+friendList.get(i));
-            }
         }
     }
 

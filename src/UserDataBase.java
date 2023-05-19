@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class UserDataBase {
@@ -16,13 +18,30 @@ public class UserDataBase {
         users.add(user);
         saveUsersToFile();
     }
-
+    public void addFriend(User sender, User receiver) {
+        sender.sendFriendRequest(receiver);
+        receiver.receiveFriendRequest(sender);
+    }
     public void updateUser(User user) {
         int index = users.indexOf(user);
         if (index != -1) {
             users.set(index, user);
             saveUsersToFile();
         }
+    }
+    public List<User> searchFriends(String keyword) {
+        List<User> results = new ArrayList<>();
+
+        for (User user : this.users) {
+            if (user.getUsername().contains(keyword) ||
+                    user.getPhone().contains(keyword) ||
+                    user.getEmail().contains(keyword)) {
+                results.add(user);
+            }
+        }
+        Collections.sort(results, Comparator.comparing(user -> user.getUsername()));
+
+        return results;
     }
 
     public boolean containsUser(String username) {
